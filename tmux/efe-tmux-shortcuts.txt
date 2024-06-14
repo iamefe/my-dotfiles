@@ -31,12 +31,15 @@ C-z then window number eg 0
 or
 C-z then n or p
 
+Ctrl+z :kill-session – kill the active session, all its windows and panes. 
+Ctrl+z :kill-window or Ctrl+z & – kill the active window and all panes within it. 
+Ctrl+z :kill-pane or Ctrl+z x – kill the active pane.
+
 See all sessions and their windows and panes
 C-z then w
 
 Rename a session
-C-z + $
-
+Cf-z + $
 
 Enable vi mode
 C-z then [
