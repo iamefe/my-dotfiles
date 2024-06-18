@@ -53,9 +53,9 @@ return {
           sorter = "case_sensitive",
         },
         view = {
-          adaptive_size = false,
+          adaptive_size = true,
           side = "right",
-          width = 30,
+          width = 35,
           relativenumber = false,
           preserve_window_proportions = true,
         },
@@ -189,7 +189,7 @@ return {
   -- Filename
   {
     "b0o/incline.nvim",
-    enabled = false,
+    enabled = true,
     dependencies = {},
     event = "BufReadPre",
     priority = 1200,
@@ -408,6 +408,7 @@ return {
     },
   },
 
+  -- Telescope
   {
     "telescope.nvim",
     priority = 1000,
@@ -440,7 +441,7 @@ return {
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       },
       {
-        "\\\\",
+        "sb",
         function()
           local builtin = require "telescope.builtin"
           builtin.buffers()
@@ -487,11 +488,35 @@ return {
             hidden = true,
             grouped = true,
             previewer = false,
-            initial_mode = "insert",
+            initial_mode = "normal",
             layout_config = { height = 40 },
           }
         end,
         desc = "Open File Browser with the path of the current buffer",
+      },
+      {
+        "sc",
+        function()
+          local telescope = require "telescope"
+
+          local function get_nvim_config_dir()
+            return vim.fn.expand "~/.config/nvim"
+          end
+
+          telescope.extensions.file_browser.file_browser {
+            path = get_nvim_config_dir(),
+            cwd = get_nvim_config_dir(),
+            respect_gitignore = false,
+            hidden = true,
+            grouped = true,
+            previewer = false,
+            initial_mode = "normal",
+            layout_config = { height = 20 },
+            prompt_title = "Config Files",
+          }
+        end,
+
+        desc = "NvChad config directory",
       },
     },
     config = function(_, opts)
@@ -501,6 +526,7 @@ return {
 
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
+        prompt_prefix = "  ⌘  ",
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",

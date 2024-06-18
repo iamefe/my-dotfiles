@@ -22,7 +22,7 @@ lspconfig.tsserver.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
-  single_file_support = false,
+  single_file_support = true,
   root_dir = function(...)
     return require("lspconfig.util").root_pattern ".git"(...)
   end,

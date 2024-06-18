@@ -13,6 +13,7 @@ M.ui = {
   },
 
   tabufline = {
+    enabled = false,
     --  more opts
     order = { "buffers", "tabs", "btns" },
     -- order = { "treeOffset", "buffers", "tabs", "btns"} -- Default table
@@ -30,7 +31,7 @@ M.ui = {
   telescope = { style = "bordered" },
 
   nvdash = {
-    load_on_startup = false,
+    load_on_startup = true,
 
     header = {
 
@@ -43,6 +44,8 @@ M.ui = {
     },
 
     buttons = {
+      { "⌘  Config Files *", "s c" },
+
       { "  Find File", "Spc f f", "Telescope find_files" },
       { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
       { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
