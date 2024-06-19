@@ -4,11 +4,56 @@
 -- https://github.com/NvChad/NvChad/tree/v2.5
 -- You should also check for the current version or the version you are using. The example above is for v2.5
 return {
+  -- Search/replace in multiple files
+  {
+    "nvim-pack/nvim-spectre",
+    build = false,
+    cmd = "Spectre",
+    opts = { open_cmd = "noswapfile vnew" },
+    -- stylua: ignore
+    keys = {
+      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in Files (Spectre)" },
+    },
+  },
 
+  -- Finds and lists all of the TODO, HACK, BUG, etc comment
+  -- in your project and loads them into a browsable list.
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "VeryLazy",
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
+      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
+      { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+    },
+  },
+
+  -- Move any selection in any direction with Alt + hjkl
+  {
+    "echasnovski/mini.move",
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  -- Automatically add closing tags for HTML and JSX
+  {
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  -- Comments
   {
     "folke/ts-comments.nvim",
     opts = {},
     event = "VeryLazy",
+    enabled = true,
   },
 
   -- NvimTree
@@ -501,7 +546,7 @@ return {
         desc = "Open File Browser with the path of the current buffer",
       },
       {
-        "sc",
+        "<Leader>sc",
         function()
           local telescope = require "telescope"
 

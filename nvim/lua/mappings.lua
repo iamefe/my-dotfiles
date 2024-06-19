@@ -19,7 +19,7 @@ map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", opts)
 map("n", "<Leader>q", ":quit<Return>", opts)
 map("n", "<Leader>Q", ":qa<Return>", opts)
 
--- Split window
+-- SplitTelescope keymaps window
 map("n", "<Leader>ss", ":split<Return>", opts)
 map("n", "<Leader>sv", ":vsplit<Return>", opts)
 
@@ -50,4 +50,54 @@ end, { silent = true, expr = true })
 -- Lazy
 map("n", "<Leader>l", ":Lazy<CR>", opts)
 
--- Config
+-- Telescope keymaps
+map("n", "<Leader>km", ":Telescope keymaps<CR>", { noremap = true, silent = true })
+
+-- Duplicate the current line in normal mode
+map("n", "<Leader>d", "yyp", opts)
+
+-- @author: Efe Ativie
+-- START: Custom command for opening NvChad config directory
+
+local autocmd = vim.api.nvim_create_autocmd
+
+-- Define the custom function to open NvChad config in Telescope
+local function open_nvchad_config()
+  local telescope = require "telescope"
+  local function get_nvim_config_dir()
+    return vim.fn.expand "~/.config/nvim"
+  end
+  telescope.extensions.file_browser.file_browser {
+    path = get_nvim_config_dir(),
+    cwd = get_nvim_config_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    previewer = false,
+    initial_mode = "normal",
+    layout_config = {
+      height = 20,
+    },
+    prompt_title = "Config Files",
+  }
+end
+
+-- Create an augroup for the custom command
+local augroup = vim.api.nvim_create_augroup("CustomCommands", { clear = true })
+
+-- Create the custom autocmd
+autocmd("User", {
+  pattern = "OpenNvChadConfig",
+  group = augroup,
+  callback = open_nvchad_config,
+})
+
+-- Create the custom command to call the autocmd
+vim.api.nvim_create_user_command("OpenNvChadConfig", function()
+  vim.api.nvim_exec_autocmds("User", { pattern = "OpenNvChadConfig" })
+end, { nargs = 0 })
+
+-- Set the keymap to call the custom command
+vim.api.nvim_set_keymap("n", "<Leader>sc", ":OpenNvChadConfig<CR>", { noremap = true, silent = true })
+
+-- END: Custom command for opening NvChad config directory

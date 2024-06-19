@@ -44,7 +44,7 @@ M.ui = {
     },
 
     buttons = {
-      { "⌘  Config Files *", "s c" },
+      { "⌘  Config Files *", "Spc s c", "OpenNvChadConfig" },
 
       { "  Find File", "Spc f f", "Telescope find_files" },
       { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },

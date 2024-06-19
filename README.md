@@ -49,7 +49,7 @@ See all sessions and their windows and panes
 C-z then w
 
 Rename a session
-Cf-z + $
+C-z + $
 
 Enable vi mode
 C-z then [
