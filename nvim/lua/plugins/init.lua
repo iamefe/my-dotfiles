@@ -5,6 +5,12 @@
 -- You should also check for the current version or the version you are using. The example above is for v2.5
 return {
 
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
+
   -- NvimTree
   {
     "nvim-tree/nvim-tree.lua",
@@ -189,7 +195,7 @@ return {
   -- Filename
   {
     "b0o/incline.nvim",
-    enabled = true,
+    enabled = false,
     dependencies = {},
     event = "BufReadPre",
     priority = 1200,
