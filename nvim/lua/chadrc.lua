@@ -7,6 +7,17 @@ local M = {}
 M.ui = {
   theme = "oxocarbon", -- @author: Efe - My fovorite is oxocarbon
 
+  changed_themes = {
+    oxocarbon = {
+      base_16 = {
+        base00 = "#000000",
+      },
+      base_30 = {
+        black = "#000000",
+      },
+    },
+  },
+
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },

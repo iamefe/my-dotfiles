@@ -70,7 +70,8 @@ C-d to go down half a page
 
 Install Neovim
 https://github.com/neovim/neovim/releases
-I prefer Tarball. Delete the previous extract located in the home directory and extra the new one there.
+
+I prefer Tarball. Delete the previous extract located in the home directory and extract the new one there.
 
 Set aliases in .bashrc
 alias vim='clear && nvim'
