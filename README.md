@@ -1,5 +1,17 @@
 # Notes
 
+## For new Nvchad installation
+Install Neovim this from https://github.com/neovim/neovim
+
+Then install NvChad this way. 
+```bash
+git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
+```
+After which you should follow the remaining instructions at
+https://nvchad.com/docs/quickstart/install
+
+Then carefully assess the files in this dotfiles repo for any version/compatibility changes with your new NvChad installation before pasting each one's content accordingly.
+
 ## Terminal productivity enhancements
 
 https://www.youtube.com/shorts/K1FxGIG_lcA
