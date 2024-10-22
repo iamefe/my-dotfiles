@@ -1,9 +1,14 @@
--- EXAMPLE
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").capabilities
+-- load defaults i.e lua_lsp
+require("nvchad.configs.lspconfig").defaults()
+
+local nvlsp = require "nvchad.configs.lspconfig"
+
+local on_attach = nvlsp.on_attach
+local on_init = nvlsp.on_init
+local capabilities = nvlsp.capabilities
 
 local lspconfig = require "lspconfig"
+
 local servers = { "html", "cssls", "pyright", "clangd", "eslint", "jsonls" }
 
 -- lsps with default config
@@ -18,7 +23,7 @@ end
 -- Without the loop, you would have to manually set up each LSP
 
 -- typescript
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,

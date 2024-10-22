@@ -375,6 +375,13 @@ return {
     end,
   },
 
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   config = function()
+  --     require "configs.lspconfig"
+  --   end,
+  -- },
+
   -- Telescope emojis
   {
     "xiyaowong/telescope-emoji.nvim",
