@@ -1,7 +1,7 @@
 local options = {
 
 	base46 = {
-	  theme = "catppuccin", -- default theme
+	  theme = "nightowl", -- default theme
 	  hl_add = {},
 	  hl_override = {
 		Comment = { italic = true },
@@ -10,7 +10,7 @@ local options = {
 	  integrations = {},
 	  changed_themes = {},
 	  transparency = false,
-	  theme_toggle = { "catppuccin", "one_light" },
+	  theme_toggle = { "nightowl", "one_light" },
 	},
   
 	ui = {
@@ -24,7 +24,7 @@ local options = {
 		},
 	  },
   
-	  telescope = { style = "bordered" }, -- borderless / bordered
+	  telescope = { style = "bordered"}, -- borderless / bordered
   
 	  statusline = {
 		theme = "vscode", -- default/vscode/vscode_colored/minimal
@@ -37,7 +37,7 @@ local options = {
   
 	  -- lazyload it when there are 1+ buffers
 	  tabufline = {
-		enabled = false,
+		enabled = true,
 		--  more opts
 		order = { "buffers", "tabs", "btns" },
 		-- order = { "treeOffset", "buffers", "tabs", "btns"} -- Default table
@@ -57,12 +57,13 @@ local options = {
 		"   ▀██ █████▄▀█▀▄██████▄    ",
 		"     ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀   ",
 		"                            ",
-		"     Powered By  eovim    ",
 		"                            ",
 	  },
   
 	  buttons = {
-		{ txt = "⌘  Config Files *", keys = "Spc s c", cmd = "OpenNvChadConfig" },
+    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+    { txt = "⚙️  Config Files *", keys = "sc", cmd = "OpenNvChadConfig", no_gap = true },
+    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
 		{ txt = "  Find File", keys = "ff", cmd = "Telescope find_files" },
 		{ txt = "  Recent Files", keys = "fo", cmd = "Telescope oldfiles" },
 		{ txt = "󰈭  Find Word", keys = "fw", cmd = "Telescope live_grep" },

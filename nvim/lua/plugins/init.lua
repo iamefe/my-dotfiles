@@ -4,6 +4,19 @@
 -- https://github.com/NvChad/NvChad/tree/v2.5
 -- You should also check for the current version or the version you are using. The example above is for v2.5
 return {
+
+  -- {
+  --   'MeanderingProgrammer/render-markdown.nvim',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+  --   ---@module 'render-markdown'
+  --   ---@type render.md.UserConfig
+  --   opts = {},
+  --   lazy = false,
+  -- };
+
+  
   -- Search/replace in multiple files
   {
     "nvim-pack/nvim-spectre",
@@ -233,14 +246,14 @@ return {
     },
     -- optional for floating window border decoration
     dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
+      "nvim-lua/plenary.nvim" 
+      },
   },
 
   -- Filename
   {
     "b0o/incline.nvim",
-    enabled = false,
+    enabled = true,
     dependencies = {},
     event = "BufReadPre",
     priority = 1200,
@@ -375,13 +388,6 @@ return {
     end,
   },
 
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   config = function()
-  --     require "configs.lspconfig"
-  --   end,
-  -- },
-
   -- Telescope emojis
   {
     "xiyaowong/telescope-emoji.nvim",
@@ -477,10 +483,11 @@ return {
       },
       "nvim-telescope/telescope-file-browser.nvim",
       "folke/noice.nvim",
+      -- "stevearc/dressing.nvim", 
     },
     keys = {
       {
-        ";f",
+        ";r",
         function()
           local builtin = require "telescope.builtin"
           builtin.find_files {
@@ -490,13 +497,21 @@ return {
         end,
         desc = "Lists files in your current working directory, respects .gitignore",
       },
+      -- {
+      --   ";r",
+      --   function()
+      --     local builtin = require "telescope.builtin"
+      --     builtin.live_grep()
+      --   end,
+      --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
+      -- },
       {
-        ";r",
+        ";f",
         function()
           local builtin = require "telescope.builtin"
-          builtin.live_grep()
+          builtin.current_buffer_fuzzy_find()
         end,
-        desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
+        desc = "Search for a string in your current buffer",
       },
       {
         "sb",
@@ -547,7 +562,7 @@ return {
             grouped = true,
             previewer = false,
             initial_mode = "normal",
-            layout_config = { height = 40 },
+            layout_config = { height = 30 },
           }
         end,
         desc = "Open File Browser with the path of the current buffer",
@@ -584,6 +599,9 @@ return {
 
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
+        notify = {
+          enable = false,
+        },
         prompt_prefix = "  ⌘  ",
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
@@ -631,6 +649,12 @@ return {
       require("telescope").load_extension "fzf"
       require("telescope").load_extension "file_browser"
       require("telescope").load_extension "noice"
+      
+      -- Remove title background and change title text color to white
+      vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = "NONE", fg = "white" }) 
+      vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { bg = "NONE", fg = "white" }) 
+      vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { bg = "NONE",  fg = "white" })
     end,
+
   },
 }

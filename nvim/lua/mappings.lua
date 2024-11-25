@@ -26,6 +26,8 @@ map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", opts)
 map("n", "<Leader>q", ":quit<Return>", opts)
 map("n", "<Leader>Q", ":qa<Return>", opts)
 
+map("n", "<Leader>X", ":bd<CR>", opts)
+
 -- SplitTelescope keymaps window
 map("n", "<Leader>ss", ":split<Return>", opts)
 map("n", "<Leader>sv", ":vsplit<Return>", opts)
@@ -102,7 +104,9 @@ autocmd("User", {
 -- Create the custom command to call the autocmd
 vim.api.nvim_create_user_command("OpenNvChadConfig", function()
   vim.api.nvim_exec_autocmds("User", { pattern = "OpenNvChadConfig" })
-end, { nargs = 0 })
+end, 
+  { nargs = 0 }
+)
 
 -- Set the keymap to call the custom command
 vim.api.nvim_set_keymap("n", "<Leader>sc", ":OpenNvChadConfig<CR>", { noremap = true, silent = true })
