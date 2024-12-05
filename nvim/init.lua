@@ -35,3 +35,38 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Author: Oserefemhen Ativie (alias: Efe)
+-- Define a function to initialize and call the file browser
+local function setup_file_browser()
+  local telescope = require "telescope"
+
+  local function telescope_buffer_dir()
+    return vim.fn.expand "%:p:h"
+  end
+
+  telescope.extensions.file_browser.file_browser {
+    path = "%:p:h",
+    cwd = telescope_buffer_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    previewer = false,
+    initial_mode = "normal",
+    layout_config = { height = 24 },
+  }
+end
+
+-- Open Telescope File Browser when Neovim starts without arguments
+-- Automatically call the setup function on VimEnter, but only if no files or arguments are provided
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Check if no files or arguments are given ie. the if vim.fn.argc() == 0 condition
+    -- ensures the file browser is only opened when Neovim starts without arguments
+    -- (e.g., no vim .bashrc or vim some_directory).
+    if vim.fn.argc() == 0 then
+      setup_file_browser()
+    end
+  end,
+  desc = "Open Telescope File Browser when Neovim starts without arguments",
+})

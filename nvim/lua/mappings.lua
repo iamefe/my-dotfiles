@@ -8,8 +8,6 @@ local opts = { noremap = true, silent = true }
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
-
 -- map("n", ";fb", ":Telescope file_browser<CR>")
 
 -- Select mode
@@ -20,23 +18,40 @@ map("n", "+", "<C-a>")
 map("n", "-", "<C-x>")
 
 -- Save in normal, insert and visual modes
-map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", opts)
+-- map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR><Escape>", opts)
 
--- Quit
-map("n", "<Leader>q", ":quit<Return>", opts)
-map("n", "<Leader>Q", ":qa<Return>", opts)
+-- Save as untitled.txt.
+-- If the file was already saved: Saves as copy without switching the document in the buffer to the copy.
+-- map({ "n", "i", "v" }, "<C-n>", ":saveas", opts)
 
+-- Save file (saves existing files normally and saves new files also)
+map({ "n", "i", "v" }, "<C-s>", function()
+  local current_file = vim.fn.expand "%:p"
+
+  if current_file == "" then
+    local timestamp = os.date "%Y%m%d_%H%M%S"
+    local new_filename = vim.fn.getcwd() .. "/untitled_" .. timestamp .. ".txt"
+    vim.cmd("saveas " .. vim.fn.fnameescape(new_filename))
+  else
+    vim.cmd "w"
+  end
+end, opts)
+
+-- Quit (prompts you to save)
+-- map("n", "<Leader>q", ":quit<Return>", opts)
+
+-- Quit (discards unsaved changes)
+-- map("n", "<Leader>Q", ":qa!<Return>", opts)
+
+-- Delete tab (ie. buffer)
 map("n", "<Leader>X", ":bd<CR>", opts)
 
--- SplitTelescope keymaps window
+-- Split window
 map("n", "<Leader>ss", ":split<Return>", opts)
 map("n", "<Leader>sv", ":vsplit<Return>", opts)
 
 -- Telescope emoji
 map("n", "<Leader>e", ":Telescope emoji<Return>", opts)
-
--- NvimTree
-map("n", "<Leader>F", ":NvimTreeFindFile<Return>", opts)
 
 -- Lsp Hover Doc Scrolling
 map({ "n", "i", "s" }, "<c-f>", function()
@@ -61,6 +76,9 @@ map("n", "<Leader>l", ":Lazy<CR>", opts)
 
 -- Telescope keymaps
 map("n", "<Leader>km", ":Telescope keymaps<CR>", { noremap = true, silent = true })
+
+-- Open Telescope
+map("n", "<Leader>t", ":Telescope<CR>", { noremap = true, silent = true })
 
 -- Duplicate the current line in normal mode
 map("n", "<Leader>d", "yyp", opts)
@@ -104,11 +122,12 @@ autocmd("User", {
 -- Create the custom command to call the autocmd
 vim.api.nvim_create_user_command("OpenNvChadConfig", function()
   vim.api.nvim_exec_autocmds("User", { pattern = "OpenNvChadConfig" })
-end, 
-  { nargs = 0 }
-)
+end, { nargs = 0 })
 
 -- Set the keymap to call the custom command
-vim.api.nvim_set_keymap("n", "<Leader>sc", ":OpenNvChadConfig<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>sc", ":OpenNvChadConfig<CR>", opts)
 
 -- END: Custom command for opening NvChad config directory
+
+-- Print working directory
+map("n", ";p", ":pwd<CR>", opts)

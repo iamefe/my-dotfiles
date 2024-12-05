@@ -35,3 +35,6 @@ vim.opt.splitkeep = "cursor"
 -- Add asterisks in block comments
 vim.opt.formatoptions:append { "r" }
 vim.notify = require "notify"
+
+-- Turn on relative line numbers
+vim.wo.relativenumber = true

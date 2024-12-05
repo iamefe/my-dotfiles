@@ -9,7 +9,8 @@ local capabilities = nvlsp.capabilities
 
 local lspconfig = require "lspconfig"
 
-local servers = { "html", "cssls", "pyright", "clangd", "eslint", "jsonls" }
+-- Run :MasonInstallAll to automatically install all of these or new servers you add.
+local servers = { "html", "cssls", "pyright", "clangd", "eslint", "jsonls", "sqlls", "svelte" }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -63,6 +64,17 @@ lspconfig.rust_analyzer.setup {
   capabilities = capabilities,
   filetypes = { "rust" },
   root_dir = lspconfig.util.root_pattern "Cargo.toml",
+
+  settings = {
+    ["rust_analyzer"] = {
+      diagnostics = {
+        enable = false,
+      },
+      cargo = {
+        allFeatures = true,
+      },
+    },
+  },
 }
 
 -- lua
@@ -123,7 +135,7 @@ lspconfig.lua_ls.setup {
         unusedLocalExclude = { "_*" },
       },
       format = {
-        enable = false,
+        enable = true,
         defaultConfig = {
           indent_style = "space",
           indent_size = "2",

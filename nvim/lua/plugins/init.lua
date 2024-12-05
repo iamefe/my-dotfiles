@@ -5,18 +5,6 @@
 -- You should also check for the current version or the version you are using. The example above is for v2.5
 return {
 
-  -- {
-  --   'MeanderingProgrammer/render-markdown.nvim',
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-  --   ---@module 'render-markdown'
-  --   ---@type render.md.UserConfig
-  --   opts = {},
-  --   lazy = false,
-  -- };
-
-  
   -- Search/replace in multiple files
   {
     "nvim-pack/nvim-spectre",
@@ -70,8 +58,10 @@ return {
   },
 
   -- NvimTree
+  -- Set enabled to true and run LazySync if you want to download and use NvimTree alongside the File browser
   {
     "nvim-tree/nvim-tree.lua",
+    enabled = false,
     lazy = false,
     config = function()
       require("nvim-tree").setup {
@@ -93,6 +83,11 @@ return {
 
           -- custom mappings
           vim.keymap.set("n", "t", api.node.open.tab, opts "Tab")
+          -- vim.cmd [[
+          --     :hi NvimTreeNormal guibg=#011627,
+          --     :hi NvimTreeNormalFloat guibg=#011627,
+          --     :hi NvimTreeNormalNC guibg=#011627
+          --   ]]
         end,
 
         disable_netrw = true,
@@ -161,7 +156,7 @@ return {
                 renamed = "➜",
                 untracked = "★",
                 deleted = "",
-                ignored = "❆",
+                ignored = "❆", -- Customized by Efe
               },
             },
           },
@@ -190,6 +185,7 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = function()
+      -- Import the configurations from the conform.lua file in the configs directory
       require "configs.conform"
     end,
   },
@@ -236,6 +232,14 @@ return {
   -- LazyGit integration with Telescope
   {
     "kdheepak/lazygit.nvim",
+    lazy = false,
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
     keys = {
       {
         ";c",
@@ -246,8 +250,12 @@ return {
     },
     -- optional for floating window border decoration
     dependencies = {
-      "nvim-lua/plenary.nvim" 
-      },
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("telescope").load_extension "lazygit"
+    end,
   },
 
   -- Filename
@@ -414,24 +422,10 @@ return {
     end,
   },
 
-  -- Install language servers
+  -- Install Mason
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "html-lsp",
-        "css-lsp",
-        "prettier",
-        "typescript-language-server",
-        "pyright",
-        "clangd",
-        "eslint-lsp",
-        "rust-analyzer",
-        "json-lsp",
-      },
-    },
+    opts = {},
   },
 
   -- Syntax highlighting
@@ -475,6 +469,7 @@ return {
   -- Telescope
   {
     "telescope.nvim",
+    lazy = false,
     priority = 1000,
     dependencies = {
       {
@@ -483,9 +478,10 @@ return {
       },
       "nvim-telescope/telescope-file-browser.nvim",
       "folke/noice.nvim",
-      -- "stevearc/dressing.nvim", 
+      -- "stevearc/dressing.nvim",
     },
     keys = {
+
       {
         ";r",
         function()
@@ -505,6 +501,15 @@ return {
       --   end,
       --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       -- },
+
+      {
+        ";w",
+        function()
+          local builtin = require "telescope.builtin"
+          builtin.grep_string()
+        end,
+        desc = "Search for a word in your current working directory",
+      },
       {
         ";f",
         function()
@@ -562,7 +567,7 @@ return {
             grouped = true,
             previewer = false,
             initial_mode = "normal",
-            layout_config = { height = 30 },
+            layout_config = { height = 24 },
           }
         end,
         desc = "Open File Browser with the path of the current buffer",
@@ -602,7 +607,7 @@ return {
         notify = {
           enable = false,
         },
-        prompt_prefix = "  ⌘  ",
+        prompt_prefix = " ⌘    ",
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
@@ -649,12 +654,11 @@ return {
       require("telescope").load_extension "fzf"
       require("telescope").load_extension "file_browser"
       require("telescope").load_extension "noice"
-      
-      -- Remove title background and change title text color to white
-      vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = "NONE", fg = "white" }) 
-      vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { bg = "NONE", fg = "white" }) 
-      vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { bg = "NONE",  fg = "white" })
-    end,
 
+      -- Remove title background and change title text color to white
+      vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = "NONE", fg = "white" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { bg = "NONE", fg = "white" })
+      vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { bg = "NONE", fg = "white" })
+    end,
   },
 }
