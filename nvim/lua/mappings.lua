@@ -35,6 +35,11 @@ map({ "n", "i", "v" }, "<C-s>", function()
   else
     vim.cmd "w"
   end
+
+  -- Check if currently in insert mode and exit it
+  if vim.fn.mode() == "i" then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>", true, false, true), "n", false)
+  end
 end, opts)
 
 -- Quit (prompts you to save)
