@@ -148,3 +148,10 @@ z() {
         --bind 'enter:become:echo {2..}'
   ) && cd "$dir"
 }
+
+
+bkl() {
+  ~/fedora_keyboard_backlight/led_on.sh
+}
+
+
