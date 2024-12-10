@@ -33,7 +33,7 @@ map({ "n", "i", "v" }, "<C-s>", function()
     local new_filename = vim.fn.getcwd() .. "/untitled_" .. timestamp .. ".txt"
     vim.cmd("saveas " .. vim.fn.fnameescape(new_filename))
   else
-    vim.cmd "w"
+    vim.cmd "w!"
   end
 
   -- Check if currently in insert mode and exit it
