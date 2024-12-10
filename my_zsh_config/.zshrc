@@ -111,6 +111,8 @@ alias vim='clear && nvim';
 # alias vi='clear && nvim';
 # alias nvim='clear && nvim';
 
+source <(fzf --zsh)
+
 unset rc
 . "$HOME/.cargo/env"
 
@@ -134,3 +136,15 @@ alias fzf="fzf \
     --bind 'enter:become:nvim {1} +{2}' \
     --height 40% --layout reverse";
 
+. ~/.z.sh
+
+unalias z 2> /dev/null
+
+z() {
+  local dir=$(
+    _z 2>&1 |
+    fzf --height 40% --layout reverse --info inline \
+        --nth 2.. --tac --no-sort --query "$*" \
+        --bind 'enter:become:echo {2..}'
+  ) && cd "$dir"
+}
