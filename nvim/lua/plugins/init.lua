@@ -523,7 +523,11 @@ return {
         "sb",
         function()
           local builtin = require "telescope.builtin"
-          builtin.buffers()
+          builtin.buffers {
+            previewer = false,
+            layout_config = { height = 18, width = 64 },
+            prompt_title = "Tabs",
+          }
         end,
         desc = "Lists open buffers",
       },
