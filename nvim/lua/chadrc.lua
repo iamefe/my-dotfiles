@@ -1,7 +1,7 @@
 local options = {
 
   base46 = {
-    theme = "oxocarbon", -- default theme
+    theme = "catppuccin", -- default theme
     hl_add = {},
     hl_override = {
       Comment = { italic = true },
@@ -10,7 +10,7 @@ local options = {
     integrations = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "oxocarbon", "one_light" },
+    theme_toggle = { "catppuccin", "one_light" },
   },
 
   ui = {
