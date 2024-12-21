@@ -154,4 +154,6 @@ bkl() {
   ~/fedora_keyboard_backlight/led_on.sh
 }
 
+export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+
 
