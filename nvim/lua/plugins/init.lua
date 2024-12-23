@@ -635,6 +635,7 @@ return {
           theme = "dropdown",
           -- disables netrw and use telescope-file-browser in its place
           hijack_netrw = true,
+          previewer = false,
           mappings = {
             -- your custom insert mode mappings
             ["n"] = {
