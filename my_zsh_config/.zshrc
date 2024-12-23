@@ -157,3 +157,5 @@ bkl() {
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
