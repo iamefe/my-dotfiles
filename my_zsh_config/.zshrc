@@ -136,26 +136,47 @@ alias fzf="fzf \
     --bind 'enter:become:nvim {1} +{2}' \
     --height 40% --layout reverse";
 
-. ~/.z.sh
 
-unalias z 2> /dev/null
+eval "$(zoxide init zsh)"
 
 z() {
   local dir=$(
-    _z 2>&1 |
+    zoxide query --list --score |
     fzf --height 40% --layout reverse --info inline \
         --nth 2.. --tac --no-sort --query "$*" \
         --bind 'enter:become:echo {2..}'
   ) && cd "$dir"
 }
+# . ~/.z.sh
+#
+# unalias z 2> /dev/null
+# z() {
+#   local dir=$(
+#     _z 2>&1 |
+#     fzf --height 40% --layout reverse --info inline \
+#         --nth 2.. --tac --no-sort --query "$*" \
+#         --bind 'enter:become:echo {2..}'
+#   ) && cd "$dir"
+# }
 
 
-bkl() {
-  ~/fedora_keyboard_backlight/led_on.sh
-}
+# bkl() {
+#   ~/fedora_keyboard_backlight/led_on.sh
+# }
 
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+export EDITOR="nvim"
