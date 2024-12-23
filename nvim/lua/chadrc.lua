@@ -9,7 +9,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "catppuccin", "one_light" },
   },
 
