@@ -136,6 +136,7 @@ alias fzf="fzf \
     --bind 'enter:become:nvim {1} +{2}' \
     --height 40% --layout reverse";
 
+alias f="fzf"
 
 eval "$(zoxide init zsh)"
 
