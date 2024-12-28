@@ -60,22 +60,46 @@ lspconfig.ts_ls.setup {
 
 -- rust
 lspconfig.rust_analyzer.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "rust" },
-  root_dir = lspconfig.util.root_pattern "Cargo.toml",
-
+  on_attach = function(client, bufnr)
+    require("nvchad.configs.lspconfig").on_attach(client)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
   settings = {
-    ["rust_analyzer"] = {
-      diagnostics = {
-        enable = false,
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
       },
       cargo = {
-        allFeatures = true,
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true,
       },
     },
   },
 }
+-- lspconfig.rust_analyzer.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { "rust" },
+--   root_dir = lspconfig.util.root_pattern "Cargo.toml",
+--
+--   settings = {
+--     ["rust_analyzer"] = {
+--       diagnostics = {
+--         enable = true,
+--       },
+--       cargo = {
+--         allFeatures = true,
+--       },
+--     },
+--   },
+-- }
 
 -- lua
 lspconfig.lua_ls.setup {
