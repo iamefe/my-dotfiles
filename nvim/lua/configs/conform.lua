@@ -6,7 +6,7 @@ local options = {
       -- Conform will run multiple formatters sequentially
       python = { "isort", "black" },
       -- You can customize some of the format options for the filetype (:help conform.format)
-      rust = { "rust_analyzer", lsp_format = "fallback" },
+      -- rust = { "rust_analyzer", lsp_format = "fallback" },
       javascript = { "prettier" },
       typescript = { "prettier" },
       html = { "prettier" },
