@@ -61,7 +61,7 @@ return {
   -- Set enabled to true and run LazySync if you want to download and use NvimTree alongside the File browser
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = false,
+    enabled = true,
     lazy = false,
     config = function()
       require("nvim-tree").setup {
@@ -113,7 +113,7 @@ return {
         },
         view = {
           adaptive_size = true,
-          side = "right",
+          side = "left",
           width = 35,
           relativenumber = false,
           preserve_window_proportions = true,
@@ -589,8 +589,10 @@ return {
           telescope.extensions.file_browser.file_browser {
             path = get_nvim_config_dir(),
             cwd = get_nvim_config_dir(),
-            respect_gitignore = false,
-            hidden = true,
+            respect_gitignore = true,
+            follow_symlinks = true,
+            -- select_buffer = true,
+            hidden = false,
             grouped = true,
             previewer = false,
             initial_mode = "normal",
@@ -637,6 +639,11 @@ return {
           hijack_netrw = true,
           follow_symlinks = true,
           previewer = false,
+          dir_icon = "",
+          display_stat = { date = true, size = true },
+          quiet = true,
+          hide_parent_dir = true,
+          depth = 1,
           mappings = {
             -- your custom insert mode mappings
             ["n"] = {
