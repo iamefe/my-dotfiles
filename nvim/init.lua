@@ -70,3 +70,5 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
   desc = "Open Telescope File Browser when Neovim starts without arguments",
 })
+
+vim.opt.clipboard:append "unnamedplus"

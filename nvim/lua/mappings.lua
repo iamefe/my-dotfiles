@@ -57,6 +57,7 @@ map("n", "<Leader>sv", ":vsplit<Return>", opts)
 
 -- Telescope emoji
 map("n", "<Leader>e", ":Telescope emoji<Return>", opts)
+map("i", "<C-M-e>", "<cmd>Telescope emoji<Return>", opts)
 
 -- Lsp Hover Doc Scrolling
 map({ "n", "i", "s" }, "<c-f>", function()

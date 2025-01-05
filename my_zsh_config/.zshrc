@@ -105,8 +105,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias nvim='~/nvim-linux64/bin/nvim';
 
-# Neovim
+# Neofzfvim
 alias vim='clear && nvim'; 
 # alias vi='clear && nvim';
 # alias nvim='clear && nvim';
@@ -125,41 +126,43 @@ export NVM_DIR="$HOME/.nvm"
 
 export TERM=xterm-256color
 
-alias lg='lazygit'
+# alias lg='lazygit'
 
-alias gcb="git branch | fzf --preview 'git show --color=always {-1}' \
+lg()
+{
+    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+
+    lazygit "$@"
+
+    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+    fi
+}
+
+ alias gcb="git branch | fzf --preview 'git show --color=always {-1}' \
                  --bind 'enter:become(git checkout {-1})' \
                  --height 40% --layout reverse";
 
-alias fzf="fzf \
+ alias fzf="fzf \
     --preview='bat {} --style=numbers --color=always' \
     --bind 'enter:become:nvim {1} +{2}' \
     --height 40% --layout reverse";
 
-alias f="fzf"
+ alias f="fzf"
 
-eval "$(zoxide init zsh)"
+ eval "$(zoxide init zsh)"
 
-alias z="zi"
+ alias z="zi"
 
-# . ~/.z.sh
-#
-# unalias z 2> /dev/null
-# z() {
-#   local dir=$(
-#     _z 2>&1 |
-#     fzf --height 40% --layout reverse --info inline \
-#         --nth 2.. --tac --no-sort --query "$*" \
-#         --bind 'enter:become:echo {2..}'
-#   ) && cd "$dir"
-# }
+
 
 
 # bkl() {
 #   ~/fedora_keyboard_backlight/led_on.sh
 # }
 
-export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+# export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 
 
@@ -168,10 +171,10 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+	if cwd="$(command bat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
 }
 
-export EDITOR="nvim"
+export EDITOR=nvim

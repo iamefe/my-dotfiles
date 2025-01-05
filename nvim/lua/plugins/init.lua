@@ -61,7 +61,7 @@ return {
   -- Set enabled to true and run LazySync if you want to download and use NvimTree alongside the File browser
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = true,
+    enabled = false,
     lazy = false,
     config = function()
       require("nvim-tree").setup {
@@ -191,23 +191,23 @@ return {
   },
 
   -- Incremental rename
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    keys = {
-      {
-        "<leader>ri",
-        function()
-          return ":IncRename " .. vim.fn.expand "<cword>"
-        end,
-        desc = "Incremental rename",
-        mode = "n",
-        noremap = true,
-        expr = true,
-      },
-    },
-    config = true,
-  },
+  -- {
+  --   "smjonas/inc-rename.nvim",
+  --   cmd = "IncRename",
+  --   keys = {
+  --     {
+  --       "<leader>ri",
+  --       function()
+  --         return ":IncRename " .. vim.fn.expand "<cword>"
+  --       end,
+  --       desc = "Incremental rename",
+  --       mode = "n",
+  --       noremap = true,
+  --       expr = true,
+  --     },
+  --   },
+  --   config = true,
+  -- },
 
   -- Refactoring tool
   {
