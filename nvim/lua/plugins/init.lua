@@ -415,6 +415,11 @@ return {
 
               -- insert emoji when picked
               vim.api.nvim_put({ emoji.value }, "c", false, true)
+
+              -- Return to insert mode after inserting the emoji
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("i", true, false, true), "n", false)
+              --Move the cursor one step forward
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, false, true), "n", false)
             end,
           },
         },
