@@ -109,7 +109,7 @@ alias nvim='~/nvim-linux64/bin/nvim';
 
 # Neofzfvim
 alias vim='clear && nvim'; 
-# alias vi='clear && nvim';
+alias v='clear && nvim';
 # alias nvim='clear && nvim';
 
 source <(fzf --zsh)
@@ -178,3 +178,7 @@ function y() {
 }
 
 export EDITOR=nvim
+
+alias cr="cargo run"
+alias cq="cargo run -q"
+
