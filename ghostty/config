@@ -1,3 +1,4 @@
 theme = catppuccin-mocha
 font-family = "JetBrainsMono Nerd Font"
 font-size = 15
+shell-integration = zsh
