@@ -105,11 +105,12 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias nvim='~/nvim-linux64/bin/nvim';
 
-# Neofzfvim
-alias vim='clear && nvim'; 
-alias v='clear && nvim';
+# Neovim
+export PATH="$PATH:$HOME/nvim-linux64/bin"
+alias nvim='~/nvim-linux64/bin/nvim'
+alias vim='clear && nvim'
+alias v='clear && nvim'
 # alias nvim='clear && nvim';
 
 source <(fzf --zsh)
@@ -177,7 +178,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-export EDITOR=nvim
+export EDITOR="nvim"
 
 alias cr="cargo run"
 alias cq="cargo run -q"
