@@ -66,6 +66,9 @@ lspconfig.rust_analyzer.setup {
   end,
   settings = {
     ["rust-analyzer"] = {
+      -- rustfmt = {
+      --   extraArgs = { "--config", "max_width=0" }, -- Effectively disables line wrapping
+      -- },
       imports = {
         granularity = {
           group = "module",
@@ -80,6 +83,10 @@ lspconfig.rust_analyzer.setup {
       procMacro = {
         enable = true,
       },
+      -- rustfmt = {
+      --   enableRangeFormatting = true, -- Optional, for better range formatting
+      --   extraArgs = { "--config", "max_width=0" },
+      -- },
     },
   },
 }

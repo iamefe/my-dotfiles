@@ -6,7 +6,7 @@ local options = {
       -- Conform will run multiple formatters sequentially
       python = { "isort", "black" },
       -- You can customize some of the format options for the filetype (:help conform.format)
-      -- rust = { "rust_analyzer", lsp_format = "fallback" },
+      -- rust = { "rust-analyzer" },
       javascript = { "prettier" },
       typescript = { "prettier" },
       html = { "prettier" },
@@ -30,14 +30,13 @@ local options = {
         use_tabs = "auto",
       },
     },
-
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      callback = function(args)
-        require("conform").format { bufnr = args.buf }
-      end,
-    }),
   },
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function(args)
+      require("conform").format { bufnr = args.buf }
+    end,
+  }),
 }
 
 return options
