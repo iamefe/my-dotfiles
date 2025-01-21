@@ -137,3 +137,36 @@ vim.api.nvim_set_keymap("n", "<Leader>sc", ":OpenNvChadConfig<CR>", opts)
 
 -- Print working directory
 map("n", ";p", ":pwd<CR>", opts)
+
+-- INSTRUCTIONS
+-- Open commandline prepopulated with word for replacement
+-- In normal mode: Take the word under the cursor
+-- In visual mode: Take the highlighted text (supports both single and multi-line selections)
+-- Open the command line with :%s/your_text/ pre-filled, letting you type the replacement and add flags like g and c
+
+-- Replace word under cursor or visual selection
+local function replace_text()
+  local mode = vim.api.nvim_get_mode().mode
+  local text = ""
+
+  if mode == "n" then
+    -- Get word under cursor in normal mode
+    text = vim.fn.expand "<cword>"
+  else
+    -- Get visual selection using built-in functionality
+    local saved_reg = vim.fn.getreg '"'
+    vim.cmd "noau normal! y"
+    text = vim.fn.getreg '"'
+    vim.fn.setreg('"', saved_reg)
+  end
+
+  -- Setup the replacement command - using concatenation instead of string.format
+  local cmd = ":%s/" .. text .. "/"
+
+  -- Open command line with partial command
+  vim.api.nvim_feedkeys(cmd, "n", false)
+end
+
+-- Set up the mappings
+map("n", "<leader>sr", replace_text, { desc = "Replace word under cursor" })
+map("v", "<leader>sr", replace_text, { desc = "Replace visual selection" })
