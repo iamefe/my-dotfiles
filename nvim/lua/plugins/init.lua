@@ -5,65 +5,6 @@
 -- You should also check for the current version or the version you are using. The example above is for v2.5
 return {
 
-  -- {
-  --   "mrcjkb/rustaceanvim",
-  --   version = "^5", -- Recommended
-  --   lazy = false, -- This plugin is already lazy
-  --   ["rust-analyzer"] = {
-  --     cargo = {
-  --       allFeatures = true,
-  --     },
-  --   },
-  -- },
-
-  ---@type LazySpec
-  {
-    "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
-    keys = {
-      -- 👇 in this section, choose your own keymappings!
-      {
-        "<leader>-",
-        mode = { "n", "v" },
-        "<cmd>Yazi<cr>",
-        desc = "Open yazi at the current file",
-      },
-      {
-        -- Open in the current working directory
-        "<leader>cw",
-        "<cmd>Yazi cwd<cr>",
-        desc = "Open the file manager in nvim's working directory",
-      },
-      {
-        -- NOTE: this requires a version of yazi that includes
-        -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
-        "<c-up>",
-        "<cmd>Yazi toggle<cr>",
-        desc = "Resume the last yazi session",
-      },
-    },
-    ---@type YaziConfig
-    opts = {
-      -- if you want to open yazi instead of netrw, see below for more info
-      open_for_directories = false,
-      keymaps = {
-        show_help = "<f1>",
-      },
-    },
-  },
-
-  -- Search/replace in multiple files
-  {
-    "nvim-pack/nvim-spectre",
-    build = false,
-    cmd = "Spectre",
-    opts = { open_cmd = "noswapfile vnew" },
-    -- stylua: ignore
-    keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in Files (Spectre)" },
-    },
-  },
-
   -- Finds and lists all of the TODO, HACK, BUG, etc comment
   -- in your project and loads them into a browsable list.
   {
@@ -255,26 +196,6 @@ return {
   --   },
   --   config = true,
   -- },
-
-  -- Refactoring tool
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>rc",
-        function()
-          require("refactoring").select_refactor {
-            show_success_message = true,
-          }
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-  },
 
   -- LazyGit integration with Telescope
   {
@@ -536,32 +457,48 @@ return {
     keys = {
 
       {
-        ";r",
+        "ff",
         function()
           local builtin = require "telescope.builtin"
           builtin.find_files {
             no_ignore = false,
             hidden = true,
+            previewer = false,
+            layout_config = { height = 24, width = 64 },
           }
         end,
         desc = "Lists files in your current working directory, respects .gitignore",
       },
-      -- {
-      --   ";r",
-      --   function()
-      --     local builtin = require "telescope.builtin"
-      --     builtin.live_grep()
-      --   end,
-      --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-      -- },
-
       {
         ";w",
         function()
           local builtin = require "telescope.builtin"
-          builtin.grep_string()
+          builtin.spell_suggest {
+            layout_config = { height = 24, width = 64 },
+          }
         end,
-        desc = "Search for a word in your current working directory",
+        desc = "Lists spelling suggestions for the current word under the cursor",
+      },
+
+      {
+        ";r",
+        function()
+          local builtin = require "telescope.builtin"
+          builtin.oldfiles {
+            previewer = false,
+            layout_config = { height = 24, width = 64 },
+            prompt_title = "Recent Files",
+          }
+        end,
+        desc = "List recent files",
+      },
+      {
+        "lg",
+        function()
+          local builtin = require "telescope.builtin"
+          builtin.live_grep()
+        end,
+        desc = "Search for a string in your current working directory",
       },
       {
         ";f",
@@ -608,7 +545,7 @@ return {
         desc = "Lists Function names, variables, from Treesitter",
       },
       {
-        "sf",
+        "fb",
         function()
           local telescope = require "telescope"
 
@@ -630,7 +567,7 @@ return {
         desc = "Open File Browser with the path of the current buffer",
       },
       {
-        "<Leader>sc",
+        "sc",
         function()
           local telescope = require "telescope"
 
