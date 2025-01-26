@@ -161,7 +161,7 @@ local function replace_text()
   end
 
   -- Setup the replacement command - using concatenation instead of string.format
-  local cmd = ":%s/" .. text .. "/"
+  local cmd = ":%s/" .. text .. "/change_me/c"
 
   -- Open command line with partial command
   vim.api.nvim_feedkeys(cmd, "n", false)
