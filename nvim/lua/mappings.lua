@@ -30,7 +30,6 @@ map({ "n", "i", "v" }, "<C-s>", function()
 
   -- Remove trailing whitespace
   vim.cmd ":%s/\\s\\+$//e"
-  vim.cmd "nohlsearch" -- Clear search highlight
 
   if current_file == "" then
     local timestamp = os.date "%Y%m%d_%H%M%S"
@@ -44,6 +43,7 @@ map({ "n", "i", "v" }, "<C-s>", function()
   if vim.fn.mode() == "i" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>", true, false, true), "n", false)
   end
+  vim.cmd "nohlsearch" -- Clear search highlight
 end, opts)
 
 -- Quit (prompts you to save)
