@@ -30,6 +30,7 @@ map({ "n", "i", "v" }, "<C-s>", function()
 
   -- Remove trailing whitespace
   vim.cmd ":%s/\\s\\+$//e"
+  vim.cmd "nohlsearch" -- Clear search highlight
 
   if current_file == "" then
     local timestamp = os.date "%Y%m%d_%H%M%S"
