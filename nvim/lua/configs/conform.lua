@@ -6,7 +6,7 @@ local options = {
       -- Conform will run multiple formatters sequentially
       python = { "isort", "black" },
       -- You can customize some of the format options for the filetype (:help conform.format)
-      -- rust = { "rust-analyzer" },
+      rust = { "rustfmt" },
       javascript = { "prettier" },
       typescript = { "prettier" },
       html = { "prettier" },
@@ -20,10 +20,14 @@ local options = {
     },
     format_on_save = {
       -- These options will be passed to conform.format()
-      timeout_ms = 1000,
+      timeout_ms = 50000,
       lsp_format = "fallback",
     },
     formatters = {
+      rustfmt = {
+        command = "rustfmt",
+        args = { "--edition", "2021" }, -- adjust the edition as needed
+      },
       prettier = {
         -- Prettier-specific options
         tab_width = "auto",

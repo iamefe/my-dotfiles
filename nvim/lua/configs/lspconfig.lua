@@ -84,8 +84,10 @@ lspconfig.rust_analyzer.setup {
         enable = true,
       },
       -- rustfmt = {
-      --   enableRangeFormatting = true, -- Optional, for better range formatting
-      --   extraArgs = { "--config", "max_width=0" },
+      --   extraArgs = { "--edition", "2021" },
+      --   rangeFormatting = {
+      --     enable = true,
+      --   },
       -- },
     },
   },

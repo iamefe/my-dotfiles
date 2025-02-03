@@ -28,6 +28,9 @@ map("n", "-", "<C-x>")
 map({ "n", "i", "v" }, "<C-s>", function()
   local current_file = vim.fn.expand "%:p"
 
+  -- Remove trailing whitespace
+  vim.cmd ":%s/\\s\\+$//e"
+
   if current_file == "" then
     local timestamp = os.date "%Y%m%d_%H%M%S"
     local new_filename = vim.fn.getcwd() .. "/untitled_" .. timestamp .. ".txt"
@@ -50,6 +53,9 @@ end, opts)
 
 -- Delete tab (ie. buffer)
 map("n", "<Leader>X", ":bd<CR>", opts)
+
+-- Remove trailing white spaces
+map("n", "<Leader>ts", ":%s/\\s\\+$//e<CR>", opts)
 
 -- Split window
 map("n", "<Leader>ss", ":split<Return>", opts)
