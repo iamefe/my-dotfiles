@@ -631,7 +631,7 @@ return {
           dir_icon = "",
           display_stat = { date = true, size = true },
           quiet = true,
-          hide_parent_dir = true,
+          -- hide_parent_dir = true,
           depth = 1,
           mappings = {
             -- your custom insert mode mappings
