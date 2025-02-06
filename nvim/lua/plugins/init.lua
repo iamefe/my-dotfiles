@@ -402,6 +402,34 @@ return {
     opts = {},
   },
 
+  -- -- Zoxide
+  -- {
+  --   "jvgrootveld/telescope-zoxide",
+  --   dependencies = { "nvim-telescope/telescope.nvim" },
+  --   config = function()
+  --     local telescope = require "telescope"
+  --     telescope.setup {
+  --       extensions = {
+  --         zoxide = {
+  --           prompt_title = "[ Recent folders ]",
+  --           {
+  --             mappings = {
+  --               ["<C-b>"] = {
+  --                 keepinsert = true,
+  --                 action = function(selection)
+  --                   require("telescope").extensions.file_browser.file_browser { cwd = selection.path }
+  --                 end,
+  --               },
+  --             },
+  --           },
+  --         },
+  --       },
+  --     }
+  --     require("telescope").load_extension "zoxide"
+  --     vim.keymap.set("n", "<leader>cd", telescope.extensions.zoxide.list)
+  --   end,
+  -- },
+
   -- Syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
@@ -452,10 +480,10 @@ return {
       },
       "nvim-telescope/telescope-file-browser.nvim",
       "folke/noice.nvim",
+      "jvgrootveld/telescope-zoxide",
       -- "stevearc/dressing.nvim",
     },
     keys = {
-
       {
         "ff",
         function()
@@ -464,7 +492,7 @@ return {
             no_ignore = false,
             hidden = true,
             previewer = false,
-            layout_config = { height = 24, width = 64 },
+            layout_config = { height = 24, width = 84 },
           }
         end,
         desc = "Lists files in your current working directory, respects .gitignore",
@@ -474,7 +502,7 @@ return {
         function()
           local builtin = require "telescope.builtin"
           builtin.spell_suggest {
-            layout_config = { height = 24, width = 64 },
+            layout_config = { height = 24, width = 84 },
           }
         end,
         desc = "Lists spelling suggestions for the current word under the cursor",
@@ -486,7 +514,7 @@ return {
           local builtin = require "telescope.builtin"
           builtin.oldfiles {
             previewer = false,
-            layout_config = { height = 24, width = 64 },
+            layout_config = { height = 24, width = 84 },
             prompt_title = "Recent Files",
           }
         end,
@@ -514,7 +542,7 @@ return {
           local builtin = require "telescope.builtin"
           builtin.buffers {
             previewer = false,
-            layout_config = { height = 18, width = 64 },
+            layout_config = { height = 18, width = 84 },
             prompt_title = "Tabs",
           }
         end,
@@ -543,6 +571,90 @@ return {
           builtin.treesitter()
         end,
         desc = "Lists Function names, variables, from Treesitter",
+      },
+      {
+        ";z",
+        function()
+          local telescope = require "telescope"
+          local actions = require "telescope.actions"
+          local action_state = require "telescope.actions.state"
+          local pickers = require "telescope.pickers"
+          local finders = require "telescope.finders"
+          local conf = require("telescope.config").values
+
+          -- Define an icon for directories
+          local dir_icon = "" -- This is a folder icon (Nerd Font required)
+
+          -- Get recent directories from zoxide
+          local handle = io.popen "zoxide query -l"
+          local result = handle:read "*a"
+          handle:close()
+
+          -- Convert output into a table with icons
+          local paths = {}
+          for path in result:gmatch "[^\r\n]+" do
+            table.insert(paths, { icon = dir_icon, path = path })
+          end
+
+          if #paths == 0 then
+            print "No recent directories found."
+            return
+          end
+
+          -- Show a Telescope picker for selecting a directory with icons
+          pickers
+            .new({}, {
+              prompt_title = "📂 Recent Directories",
+              finder = finders.new_table {
+                results = paths,
+                entry_maker = function(entry)
+                  return {
+                    value = entry.path,
+                    display = entry.icon .. " " .. entry.path, -- Add icon to display
+                    ordinal = entry.path,
+                  }
+                end,
+              },
+              sorter = conf.generic_sorter {},
+              attach_mappings = function(prompt_bufnr, map)
+                local function open_selected()
+                  local selection = action_state.get_selected_entry()
+                  if selection then
+                    actions.close(prompt_bufnr)
+
+                    -- Change the current working directory
+                    vim.api.nvim_set_current_dir(selection.value)
+
+                    -- Extract only the directory name
+                    local dir_name = vim.fn.fnamemodify(selection.value, ":t")
+                    print("Changed workspace to " .. '"' .. dir_name .. '"')
+
+                    -- Open Telescope File Browser with full theming
+                    telescope.extensions.file_browser.file_browser {
+                      cwd = selection.value,
+                      path = selection.value,
+                      respect_gitignore = false,
+                      hidden = true,
+                      grouped = true,
+                      previewer = false,
+                      initial_mode = "normal",
+                      layout_config = { height = 24 },
+                    }
+                  end
+                end
+
+                map("i", "<CR>", open_selected)
+                map("n", "<CR>", open_selected)
+
+                return true
+              end,
+              previewer = false,
+              initial_mode = "normal",
+              layout_config = { height = 24, width = 84 },
+            })
+            :find()
+        end,
+        desc = "Browse recent directories with icons and themes",
       },
       {
         "fb",
@@ -629,7 +741,7 @@ return {
           follow_symlinks = true,
           previewer = false,
           dir_icon = "",
-          display_stat = { date = true, size = true },
+          display_stat = {},
           quiet = true,
           -- hide_parent_dir = true,
           depth = 1,
@@ -657,6 +769,7 @@ return {
       require("telescope").load_extension "fzf"
       require("telescope").load_extension "file_browser"
       require("telescope").load_extension "noice"
+      require("telescope").load_extension "zoxide"
 
       -- Remove title background and change title text color to white
       vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = "NONE", fg = "white" })
