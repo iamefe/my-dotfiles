@@ -481,7 +481,6 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
       "folke/noice.nvim",
       "jvgrootveld/telescope-zoxide",
-      -- "stevearc/dressing.nvim",
     },
     keys = {
       {
@@ -542,7 +541,7 @@ return {
           local builtin = require "telescope.builtin"
           builtin.buffers {
             previewer = false,
-            layout_config = { height = 18, width = 84 },
+            layout_config = { height = 24, width = 84 },
             prompt_title = "Tabs",
           }
         end,
@@ -583,7 +582,10 @@ return {
           local conf = require("telescope.config").values
 
           -- Define an icon for directories
-          local dir_icon = "" -- This is a folder icon (Nerd Font required)
+          local dir_icon = "" -- Folder icon (Nerd Font required)
+
+          -- Set custom highlight for folder icon
+          vim.api.nvim_set_hl(0, "TelescopeFolderIcon", { fg = "#61afef" }) -- Set color (blue)
 
           -- Get recent directories from zoxide
           local handle = io.popen "zoxide query -l"
@@ -604,14 +606,18 @@ return {
           -- Show a Telescope picker for selecting a directory with icons
           pickers
             .new({}, {
-              prompt_title = "📂 Recent Directories",
+              prompt_title = "Recent Directories",
               finder = finders.new_table {
                 results = paths,
                 entry_maker = function(entry)
                   return {
                     value = entry.path,
-                    display = entry.icon .. " " .. entry.path, -- Add icon to display
+                    -- Add icon to display
+                    display = entry.icon .. "    " .. entry.path,
                     ordinal = entry.path,
+                    -- Highlight the whole entry (icon + path)
+                    -- This applies the 'TelescopeFolderIcon' highlight to both the icon and the path
+                    highlight = "TelescopeFolderIcon",
                   }
                 end,
               },
@@ -638,7 +644,7 @@ return {
                       grouped = true,
                       previewer = false,
                       initial_mode = "normal",
-                      layout_config = { height = 24 },
+                      layout_config = { height = 24, width = 84 },
                     }
                   end
                 end
@@ -673,7 +679,7 @@ return {
             grouped = true,
             previewer = false,
             initial_mode = "normal",
-            layout_config = { height = 24 },
+            layout_config = { height = 24, width = 84 },
           }
         end,
         desc = "Open File Browser with the path of the current buffer",
@@ -697,7 +703,7 @@ return {
             grouped = true,
             previewer = false,
             initial_mode = "normal",
-            layout_config = { height = 20 },
+            layout_config = { height = 24, width = 84 },
             prompt_title = "Config Files",
           }
         end,
@@ -740,7 +746,7 @@ return {
           hijack_netrw = true,
           follow_symlinks = true,
           previewer = false,
-          dir_icon = "",
+          dir_icon = "",
           display_stat = {},
           quiet = true,
           -- hide_parent_dir = true,
