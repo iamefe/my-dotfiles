@@ -1,4 +1,4 @@
-theme = "Oxocarbon"
+theme = "tokyonight_moon"
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
 shell-integration = zsh
