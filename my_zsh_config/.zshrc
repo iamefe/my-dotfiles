@@ -75,6 +75,8 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source <(fzf --zsh)
 
 # User configuration
 
@@ -107,13 +109,13 @@ fi
 
 
 # Neovim
-export PATH="$PATH:$HOME/nvim-linux64/bin"
-alias nvim='~/nvim-linux64/bin/nvim'
+export PATH="$PATH:$HOME/nvim-linux-x86_64/bin"
+alias nvim='~/nvim-linux-x86_64/bin/nvim'
 alias vim='clear && nvim'
 alias v='clear && nvim'
 # alias nvim='clear && nvim';
 
-source <(fzf --zsh)
+
 
 unset rc
 . "$HOME/.cargo/env"
@@ -163,11 +165,10 @@ lg()
 #   ~/fedora_keyboard_backlight/led_on.sh
 # }
 
-# export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -182,4 +183,11 @@ export EDITOR="nvim"
 
 alias cr="cargo run"
 alias cq="cargo run -q"
+alias cbpf="~/.solana-versions/1.16.27/solana-release/bin/cargo-build-bpf"
+
+export PATH="$PATH:$HOME/Android/Sdk/emulator"
+export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
+# export PATH="/home/iamefe/.local/share/solana/install/active_release/bin:$PATH"
+export PATH="$HOME/.solana-versions/1.16.27/solana-release/bin:$PATH"
+export PATH="$HOME/.avm/bin:$PATH"
 
